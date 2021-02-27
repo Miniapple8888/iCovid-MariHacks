@@ -29,6 +29,7 @@ module.exports = {
                 if (countryData.length > 0) {
                     for (var d = 0; d < countryData.length; d++) {
                         if (countryData[d].date === date) {
+                            console.log("found")
                             var value = countryData[d][subject] - countryData[d-1][subject]; // Get relative value for 1 day
                             if (value < 0) value == 0; // If negative, then out of maximums of data set
                             points.data.push({ date: countryData[d].date, value: value, location: this.getLocation(countries[c]) }); // Add valid data to array

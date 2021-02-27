@@ -45,7 +45,7 @@ export default {
    this.$refs.topProgress.start();
    http.post('/multi-stats', {
     countries: ["Canada", "US", "Mexico", "France", "China"],
-    date: "2021-02-27",
+    date: "2021-02-10",
      subject: "confirmed",
    }).then((response) => {
      let countriesData = response.data;
