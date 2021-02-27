@@ -7,4 +7,5 @@ module.exports = (app) => {
 
     app.post('/simulate', simulation.createSimulation);
     app.post('/stats', simulation.getCovidStats);
+    app.post('/multi-stats', simulation.getMultiCovidStats);
 }

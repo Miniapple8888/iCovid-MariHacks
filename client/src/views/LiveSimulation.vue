@@ -7,13 +7,13 @@
 import Map from '../components/Map.vue';
 
 export default {
-    name: 'App',
+    name: 'LiveSimulation',
   components: {
     Map,
   },
   head: {
     title: {
-      inner: 'Simulation',
+      inner: 'Live Simulation',
       separator: ' - ',
       complement: 'iCovid',
     },

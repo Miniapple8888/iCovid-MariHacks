@@ -30,8 +30,8 @@ export default {
           icon: 'fa fa-user'
         },
         {
-          href: '/simulation',
-          title: 'Simulation',
+          href: '/live-simulation',
+          title: 'Live Simulation',
           icon: 'fa fa-user'
         },
         {

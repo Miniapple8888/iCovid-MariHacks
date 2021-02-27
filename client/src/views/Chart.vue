@@ -1,6 +1,9 @@
 <template>
     <div>
         <vue-topprogress ref="topProgress"></vue-topprogress>
+        <div class="message">
+            <b-alert variant="success" show>{{ message }}</b-alert>
+        </div>
         <div class="selectionOptions">
             <label for="startDate">Country</label>
             <b-form-select v-model="selectedCountry" :options="countryOptions"></b-form-select>
@@ -27,19 +30,33 @@ export default {
         LineChart,
         vueTopprogress,
     },
+    head: {
+    title: {
+      inner: 'Charts',
+      separator: ' - ',
+      complement: 'iCovid',
+    },
+  },
     data() {
         return {
             datacollection: null,
             selectedCountry: 'Canada',
             countryOptions: [
                 { value: 'Canada', text: 'Canada' },
-                { value: 'USA', text: 'United States' },
+                { value: 'US', text: 'United States' },
                 { value: 'Mexico', text: 'Mexico' },
+                { value: 'France', text: 'France' },
+                { value: 'United Kingdom', text: 'United Kingdom' },
+                { value: 'Spain', text: 'Spain' },
+                { value: 'Italy', text: 'Italy' },
+                { value: 'Russia', text: 'Russia' },
+                { value: 'China', text: 'China' },
+                { value: 'Germany', text: 'Germany' },
             ],
             selectedSubject: 'confirmed',
             subjectObptions: [
                 { value: 'confirmed', text: 'Confirmed' },
-                { value: 'unconfirmed', text: 'Unconfirmed' },
+                { value: 'recovered', text: 'Recovered' },
                 { value: 'deaths', text: 'Deaths' },
             ],
             startDate: '2021-01-25',
@@ -47,6 +64,9 @@ export default {
             data: [],
             dates: [],
             numbers: [],
+            successfulFetch: false,
+            failureFetch: false,
+            message: '',
         };
     },
     mounted() {
@@ -61,7 +81,10 @@ export default {
                 endDate: this.endDate,
                 subject: this.selectedSubject,
             }).then((response) => {
+                console.log(response.data.msg);
+                this.message = response.data.msg;
                 let data = response.data.data;
+                
                 this.data = data;
                 for(var i = 0; i < data.length; i++) {
                     this.dates[i] = data[i].date;
@@ -77,7 +100,7 @@ export default {
             labels: this.dates,
             datasets: [
                 {
-                label: 'Dataset',
+                label: 'Total ' + this.selectedSubject + ' in ' + this.selectedCountry + " for COVID 19",
                 backgroundColor: '#1E88FF',
                 data: this.numbers,
                 },
@@ -96,7 +119,7 @@ export default {
 <style scoped>
 .small {
     max-width: 450px;
-    margin:  150px auto;
+    margin:  50px auto;
   }
   .selectionOptions {
       float: right;
@@ -104,5 +127,9 @@ export default {
       padding: 20px;
       width: 200px;
   }
-  
+  .message {
+      width: 50vw;
+      margin-left: 350px;
+      height: 20px;
+  }
 </style>

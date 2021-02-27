@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import VueHead from 'vue-head';
 import Home from '../views/Home.vue';
 import Chart from '../views/Chart.vue';
-import Simulation from '../views/Simulation.vue';
+import LiveSimulation from '../views/LiveSimulation.vue';
 import About from '../views/About.vue';
 
 Vue.use(VueHead);
@@ -16,9 +16,9 @@ const routes = [
     component: Home,
   },
   {
-    path: '/simulation/',
-    name: 'Simulation',
-    component: Simulation,
+    path: '/live-simulation/',
+    name: 'Live Simulation',
+    component: LiveSimulation,
   },
   {
     path: '/charts/',

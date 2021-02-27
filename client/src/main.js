@@ -6,7 +6,7 @@ import router from './router/index.js';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
+import "vue-sidebar-menu/dist/vue-sidebar-menu.css";
 
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);

@@ -1,14 +1,20 @@
 <template>
     <div id="container">
-        <div id="mapContainer"></div>
+      <vue-topprogress ref="topProgress"></vue-topprogress>
+      <div id="mapContainer"></div>
     </div>
 </template>
 <script>
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import http from '../../http-common';
+import { vueTopprogress } from 'vue-top-progress';
 
 export default {
  name: "Map",
+ components: {
+        vueTopprogress,
+    },
  data() {
    return{
      center: [51.505, -0.09]
@@ -29,13 +35,32 @@ export default {
          accessToken: 'pk.eyJ1IjoibWluaWFwcGxlODg4OCIsImEiOiJja2xvMGJweGIwbjM2MnZtZm1xenM4b25oIn0.wJqXESQ0ZWHUSZEo7-5ZIA',
        },
      ).addTo(mapDiv);
+     //this.getLiveData(mapDiv);
      //var marker = L.marker([51.5, -0.09]).addTo(mapDiv);
-     var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
-     marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
+    //  var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
+    //  marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
    },
+  getLiveData() {
+   console.log("doing stuff");
+   this.$refs.topProgress.start();
+   http.post('/multi-stats', {
+    countries: ["Canada", "US", "Mexico", "France", "China"],
+    date: "2021-02-27",
+     subject: "confirmed",
+   }).then((response) => {
+     let countriesData = response.data;
+     console.log(countriesData);
+                // for (let i = 0; i < countriesData.length; i++) {
+                  
+                //   //var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
+                // }
+     this.$refs.topProgress.done();
+  });
+  },
  },
  mounted() {
    this.setupLeafletMap();
+   this.getLiveData();
  },
 };
 </script>
