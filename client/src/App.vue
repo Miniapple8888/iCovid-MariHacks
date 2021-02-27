@@ -2,20 +2,17 @@
   
   <div id="app">
     <sidebar-menu :menu="menu" />
-    <Map />
 
   </div>
 </template>
 
 <script>
 import { SidebarMenu } from 'vue-sidebar-menu';
-import Map from './components/Map.vue';
 
 export default {
   name: 'App',
   components: {
     SidebarMenu,
-    Map,
   },
   data() {
     return {
@@ -31,7 +28,7 @@ export default {
           icon: 'fa fa-user'
      },
      {
-      href: '#',
+      href: '/charts',
       title: 'Charts',
       icon: 'fa fa-chart-area'
      }, 

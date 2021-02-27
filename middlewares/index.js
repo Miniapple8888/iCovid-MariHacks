@@ -1,3 +1,3 @@
 const simulation = require("./simulation");
 
-defula
+module.exports = {simulation}
