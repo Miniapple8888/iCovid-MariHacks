@@ -1,7 +1,7 @@
 <template>
   
   <div id="app">
-    <sidebar-menu :menu="menu" />
+    <sidebar-menu :menu="menu" :hideToggle="menuCollapsed"/>
     <div>
         <router-view></router-view>
       </div>
@@ -26,18 +26,29 @@ export default {
         },
         {
           href: '/',
+          title: 'Home',
+          icon: 'fa fa-user'
+        },
+        {
+          href: '/simulation',
           title: 'Simulation',
           icon: 'fa fa-user'
-     },
-     {
-      href: '/charts',
-      title: 'Charts',
-      icon: 'fa fa-chart-area'
-     }, 
-     ]
-    }
-  },
-  async created() {
+        },
+        {
+          href: '/charts',
+          title: 'Charts',
+          icon: 'fa fa-chart-area'
+        }, 
+        {
+          href: '/about',
+          title: 'About',
+          icon: 'fa fa-user'
+        }, 
+     ],
+    menuCollapsed:true,
+  }
+},
+async created() {
     
   }
 }
@@ -50,6 +61,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  /*margin-top: 60px;*/
 }
 </style>

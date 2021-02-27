@@ -6,4 +6,5 @@ module.exports = (app) => {
     }));
 
     app.post('/simulate', simulation.createSimulation);
+    app.post('/stats', simulation.getCovidStats);
 }

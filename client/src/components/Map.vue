@@ -16,12 +16,13 @@ export default {
  },
  methods: {
    setupLeafletMap: function () {
-     const mapDiv = L.map("mapContainer").setView(this.center, 13);
+     const mapDiv = L.map("mapContainer").setView(this.center, 3);
      L.tileLayer(
        "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
        {
          attribution:
            'Map data (c) <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery (c) <a href="https://www.mapbox.com/">Mapbox</a>',
+           minZoom: 2,
          maxZoom: 18,
          id: "mapbox/streets-v11",
          title: 512,
@@ -29,7 +30,7 @@ export default {
        },
      ).addTo(mapDiv);
      //var marker = L.marker([51.5, -0.09]).addTo(mapDiv);
-     var marker = L.circleMarker([51.5, -0.09], radius=20).addTo(mapDiv);
+     var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
      marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
    },
  },

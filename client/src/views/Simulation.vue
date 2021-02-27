@@ -13,7 +13,7 @@ export default {
   },
   head: {
     title: {
-      inner: 'Home',
+      inner: 'Simulation',
       separator: ' - ',
       complement: 'iCovid',
     },
