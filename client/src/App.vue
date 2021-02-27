@@ -2,7 +2,9 @@
   
   <div id="app">
     <sidebar-menu :menu="menu" />
-
+    <div>
+        <router-view></router-view>
+      </div>
   </div>
 </template>
 
