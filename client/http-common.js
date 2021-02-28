@@ -1,8 +1,15 @@
 
 import axios from 'axios';
+let origin = 'https://afternoon-sierra-62737.herokuapp.com/';
+if (process.env.NODE_ENV !== 'production') {
+  console.log("I am executed!");
+  origin = 'http://localhost:8082';
+} else {
+  console.log("I am production!");
+}
 
 export default axios.create({
-  baseURL: 'http://localhost:8082/',
+  baseURL: origin,
   headers: {
     'Content-type': 'application/json',
   },

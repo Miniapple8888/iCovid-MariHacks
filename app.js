@@ -6,9 +6,17 @@ const bodyParser = require('body-parser');
 const app = express();
 
 app.use(cookieParser());
+let origin = 'https://unruffled-keller-faf15c.netlify.app/';
+// if it's not in production
+if (process.env.NODE_ENV !== 'production') {
+  console.log("I am executed!");
+  origin = 'http://localhost:8081';
+} else {
+  console.log("I am production!");
+}
 
 const corsOptions = {
-    origin: 'http://localhost:8081',
+    origin: origin,
     optionsSuccessStatus: 200,
     credentials: true,
 }
