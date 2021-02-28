@@ -2,15 +2,17 @@ const rp = require('request-promise'); // Request GET data online
 const moment = require('moment'); // Time manipulation lib
 const fs = require('fs');
 
-async function getLocation(country) {
-    var rawdata = fs.readFileSync('countries_location.json');
-    var data = JSON.parse(rawdata);
-    var country = data[country] || false;
+var jsonCountries 
+rp.get({uri: "https://pastebin.com/raw/qeEwSuA9", json: true}).then(res => {
+    jsonCountries = res;
+}).catch(err => console.log(err));
+
+function getLocation(country) {
+    var country = jsonCountries[country] || false;
     if (country) {
-        return { lat: country.latitude, long: country.longitude };
-    } else {
-        return null;
+        return [country.latitude, country.longitude];
     }
+    return false;
 }
 
 module.exports = {
@@ -18,7 +20,13 @@ module.exports = {
         
     },
     async getMultiCovidStats(req, res) {
-        const countries = req.body.countries || "Canada"; // Requested country
+        const includeAll = req.body.includeAll || false;
+        var countries = [];
+        if (includeAll) {
+            countries = Object.keys(jsonCountries);
+        } else {
+            countries = req.body.countries || "Canada"; // Requested country
+        }
         const date = req.body.date; // Convert string date to moment object date
         const subject = req.body.subject || "confirmed"; // Desired data (confirmed, deaths, recovered)
 
@@ -29,22 +37,23 @@ module.exports = {
                 var points = { country: countries[c], data: [] };
                 if (countryData.length > 0) {
                     for (var d = 0; d < countryData.length; d++) {
-                        if (d == 0) {
-                            console.log(moment(countryData[d].date,'YYYY-MM-DD').format('YYYY-MM-DD'), date);
-                        }
                         if (moment(countryData[d].date,'YYYY-MM-DD').format('YYYY-MM-DD') === date) {
                             
                             var value = countryData[d][subject] - countryData[d-1][subject]; // Get relative value for 1 day
                             if (value < 0) value == 0; // If negative, then out of maximums of data set
-                            
-                            points.data.push({ date: countryData[d].date, value: value, location: getLocation(countries[c]) }); // Add valid data to array
+                            var location = getLocation(countries[c]);
+                            if (location) {
+                                points.data.push({ date: countryData[d].date, value: value, lat: location[0], long: location[1] }); // Add valid data to array
+                            }
                             break;
                         } else {
                             continue;
                         }
                     }
                 }
-                returnData.push(points);
+                if (points.data.length > 0) {
+                    returnData.push(points);
+                }
             }
             return res.send({data: returnData, msg: "Found available data. "}); // Return results
         }).catch(err => {

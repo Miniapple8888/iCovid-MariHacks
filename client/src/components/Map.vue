@@ -35,32 +35,46 @@ export default {
          accessToken: 'pk.eyJ1IjoibWluaWFwcGxlODg4OCIsImEiOiJja2xvMGJweGIwbjM2MnZtZm1xenM4b25oIn0.wJqXESQ0ZWHUSZEo7-5ZIA',
        },
      ).addTo(mapDiv);
+     this.getLiveData(mapDiv);
      //this.getLiveData(mapDiv);
      //var marker = L.marker([51.5, -0.09]).addTo(mapDiv);
     //  var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
     //  marker.bindPopup("<b>Hello world!</b><br>I am a popup.").openPopup();
    },
-  getLiveData() {
-   console.log("doing stuff");
+  getLiveData(mapDiv) {
    this.$refs.topProgress.start();
    http.post('/multi-stats', {
-    countries: ["Canada", "US", "Mexico", "France", "China"],
+     includeAll: true,
+    // countries: ["Canada", "US", "Mexico", "France", "China", "Japan", "Spain", 
+    // "Germany", "Brazil", "Russia", "Australia", "India", "Sweden", "Argentina",
+    // "United Kingdom", "Italy", "Greece", "Iran", "Romania", "Algeria", "Egypt", "New Zealand"],
     date: "2021-02-10",
      subject: "confirmed",
    }).then((response) => {
-     let countriesData = response.data;
-     console.log(countriesData);
-                // for (let i = 0; i < countriesData.length; i++) {
-                  
-                //   //var marker = L.circleMarker([51.5, -0.09], {radius:20}).addTo(mapDiv);
-                // }
+     let countriesData = response.data.data;
+     for (let c = 0; c < countriesData.length; c++) {
+      var strength = countriesData[c].data[0].value * 0.12;
+      var color = "#fc9403"
+      if (strength > 60) strength = 60; // max size
+      if (strength < 15) strength = 15; // min size
+      if (strength <= 45) {
+        if (strength == 15) {
+          color = "#02c208" // green
+        } else {
+          color = "#fc9403" // orange
+        }
+      } else {
+        color = "#E0301E" // red
+      }
+      var marker = L.circleMarker([countriesData[c].data[0].lat, countriesData[c].data[0].long], {radius:strength, color:color}).addTo(mapDiv);
+      marker.bindPopup("<b>" + countriesData[c].country + "</b><br>" + countriesData[c].data[0].value + " confirmed today" + "</br>").openPopup();
+    }
      this.$refs.topProgress.done();
   });
   },
  },
  mounted() {
    this.setupLeafletMap();
-   this.getLiveData();
  },
 };
 </script>

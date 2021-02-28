@@ -1,7 +1,7 @@
 <template>
     <div>
         <b-jumbotron>
-            <template #header>iCovid <b-img src="../../public/favicon.png" fluid alt="logo"></b-img></template>
+            <template #header>iCovid <img src="../assets/logo.png" /></template>
 
             <template #lead>
             Gain real-time insight on the latest COVID19 trends.

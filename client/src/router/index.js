@@ -4,6 +4,8 @@ import VueHead from 'vue-head';
 import Home from '../views/Home.vue';
 import Chart from '../views/Chart.vue';
 import LiveSimulation from '../views/LiveSimulation.vue';
+import LiveSimulationAR from '../views/LiveSimulationAR.vue';
+import Statistics from '../views/Statistics.vue';
 import About from '../views/About.vue';
 
 Vue.use(VueHead);
@@ -21,9 +23,19 @@ const routes = [
     component: LiveSimulation,
   },
   {
+    path: '/live-simulation/ar',
+    name: 'Live Simulation AR',
+    component: LiveSimulationAR,
+  },
+  {
     path: '/charts/',
     name: 'Chart',
     component: Chart,
+  },
+  {
+    path: '/statistics',
+    name: 'Statistics',
+    component: Statistics,
   },
   {
     path: '/about/',

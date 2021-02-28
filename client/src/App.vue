@@ -27,22 +27,28 @@ export default {
         {
           href: '/',
           title: 'Home',
-          icon: 'fa fa-user'
         },
         {
           href: '/live-simulation',
           title: 'Live Simulation',
-          icon: 'fa fa-user'
+          child: [
+            {
+              href: '/live-simulation/ar',
+              title: 'Augmented Reality'
+            }
+          ]
         },
         {
           href: '/charts',
           title: 'Charts',
-          icon: 'fa fa-chart-area'
         }, 
+        {
+          href: '/statistics',
+          title: 'Statistics',
+        },
         {
           href: '/about',
           title: 'About',
-          icon: 'fa fa-user'
         }, 
      ],
     menuCollapsed:true,
