@@ -2,8 +2,8 @@
     <div id="container" >
       
       <h1>Live Simuation in Augmented Reality</h1>
-        <p>This project was made for Marihacks.</p>
-        <p>Develop a computer program that can predict the future infection rates of variants. Curve fitting and Monte Carlo simulations would be a great add-on. In addition, a bonus point would be to simulate in a video game setting how certain actions can have an effect on case numbers.</p>
+        <p>Visualize COVID-19 data in 3d with augmented reality technology.</p>
+        <p>To access the AR application, click on the following link and scan the following pattern with your integrated camera.</p>
         <img src="../assets/pattern1.png"  />
         <img src="../assets/pattern.png"  />
         <a href="https://afternoon-sierra-62737.herokuapp.com/live-simulation-ar">Link to AR simulation</a>
