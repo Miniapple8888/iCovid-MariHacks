@@ -9,8 +9,11 @@ module.exports = (app) => {
     app.get('/live-simulation-ar', (req, res) => {
         res.sendFile(path.join(__dirname + '/../ar/index.html'));
     });
-    app.get('/ar/index.js', (req, res) => {
-        res.sendFile(path.join(__dirname + '/../ar/js/index.js'));
+    app.get('/ar/flamingo_model', (req, res) => {
+        res.sendFile(path.join(__dirname + '/../ar/Flamingo.gltf'));
+    });
+    app.get('/ar/flamingo_img', (req, res) => {
+        res.sendFile(path.join(__dirname + '/../ar/flamingo.jpg'));
     });
     app.post('/simulate', simulation.createSimulation);
     app.post('/stats', simulation.getCovidStats);
