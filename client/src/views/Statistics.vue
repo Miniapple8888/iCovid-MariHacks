@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="small">
-            <BarChart :chartData="dataColAge"></BarChart>
-            <Doughnut :chartData="dataGender"></Doughnut>
-            <BarChart :chartData="dataColProv"></BarChart>
+            <BarChart :chartData="dataColAge" :options="optionsAge"></BarChart>
+            <Pie :chartData="dataGender" :options="optionsGender"></Pie>
+            <BarChart :chartData="dataColProv" :options="optionsProv"></BarChart>
         </div>
     </div>
 </template>
 <script>
 import BarChart from '../components/BarChart';
-import Doughnut from '../components/Doughnut';
+import Pie from '../components/Pie';
 
 export default {
     data() {
@@ -17,6 +17,9 @@ export default {
           dataColAge: null,
           dataColProv: null,
           dataGender: null,
+          optionsAge: null,
+          optionsProv: null,
+          optionsGender: null,
           percentProv: [
               34.642668,
                 33.246642,
@@ -81,7 +84,7 @@ export default {
     },
     component: {
         'BarChart':BarChart,
-        'Doughnut':Doughnut,
+        'Pie':Pie,
     },
     head: {
         title: {
@@ -95,33 +98,86 @@ export default {
     },
     methods: {
         fillData() {
+            this.optionsAge = {
+                title: {
+                    display: true,
+                    text: 'Distribution Of Covid Cases By Age',
+                    fontSize: 28,
+                    fontFamily: 'Avenir',
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Percentage (%)'
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Age Range (Years)'
+                        }
+                    }],
+                }
+            };
+            this.optionsProv = {
+                title: {
+                    display: true,
+                    text: 'Distribution Of Covid Cases by Province',
+                    fontSize: 28,
+                    fontFamily: 'Avenir',
+                },
+                scales: {
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Percentage (%)'
+                        }
+                    }],
+                    xAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Provinces of Canada'
+                        }
+                    }],
+                }
+            };
+            this.optionsGender = {
+                title: {
+                    display: true,
+                    text: 'Distribution Of Covid Cases By Sex',
+                    fontSize: 28,
+                    fontFamily: 'Avenir',
+                }
+            };
             this.dataColAge = {
             labels: this.ageRanges,
             datasets: [{
                 barPercentage: 0.5,
-                barThickness: 6,
-                maxBarThickness: 8,
-                minBarLength: 2,
+                barThickness: 20,
+                maxBarThickness: 25,
+                minBarLength: 5,
                 label: "Age",
                 backgroundColor: '#1E88FF',
-                data: this.percentages
+                data: this.percentages,
             }],
             };
             this.dataColProv = {
             labels: this.provinces,
             datasets: [{
                 barPercentage: 0.5,
-                barThickness: 6,
-                maxBarThickness: 8,
+                barThickness: 17,
+                maxBarThickness: 22,
                 minBarLength: 2,
                 label: "Provinces",
                 backgroundColor: '#1E88FF',
-                data: this.percentProv
+                data: this.percentProv,
             }],};
             this.dataGender = {
-                label: this.genders,
+                labels: this.genders,
                 datasets: [{
                     data: this.percentGen,
+                    backgroundColor: ["#0074D9", "#FF4136"]
                 }],
             };
         },

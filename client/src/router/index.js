@@ -7,6 +7,7 @@ import LiveSimulation from '../views/LiveSimulation.vue';
 import LiveSimulationAR from '../views/LiveSimulationAR.vue';
 import Statistics from '../views/Statistics.vue';
 import About from '../views/About.vue';
+import SelfTest from '../views/SelfTest.vue';
 
 Vue.use(VueHead);
 Vue.use(VueRouter);
@@ -36,6 +37,11 @@ const routes = [
     path: '/statistics',
     name: 'Statistics',
     component: Statistics,
+  },
+  {
+    path: '/self-test',
+    name: 'Self Test',
+    component: SelfTest
   },
   {
     path: '/about/',

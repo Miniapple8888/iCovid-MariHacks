@@ -1,6 +1,51 @@
 <template>
     <div id="container">
       <vue-topprogress ref="topProgress"></vue-topprogress>
+      <div class="enableBut">
+        <b-button v-b-modal.modal-1 variant="primary">Launch Live Simulator</b-button>
+        <b-button variant="danger" id="run">Run Configuration</b-button>
+      </div>
+      <b-modal id="modal-1" title="Live Simulator">
+        <p>Enter some parameter and check out in real-time the development of COVID!</p>
+        <p>Number of people in contact with</p>
+        <v-slider
+            v-model="sliderPeople"
+            class="align-center"
+            :max="maxPeople"
+            :min="minPeople"
+            hide-details
+          >
+            <template v-slot:append>
+              <v-text-field
+                v-model="sliderPeople"
+                class="mt-0 pt-0"
+                hide-details
+                single-line
+                type="number"
+                style="width: 60px"
+              ></v-text-field>
+            </template>
+          </v-slider>
+          <p>Efficiency of masks</p>
+        <v-slider
+            v-model="sliderMask"
+            class="align-center"
+            :max="maxMask"
+            :min="minMask"
+            hide-details
+          >
+            <template v-slot:append>
+              <v-text-field
+                v-model="sliderMask"
+                class="mt-0 pt-0"
+                hide-details
+                single-line
+                type="number"
+                style="width: 60px"
+              ></v-text-field>
+            </template>
+          </v-slider>
+      </b-modal>
       <div id="mapContainer"></div>
     </div>
 </template>
@@ -9,6 +54,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import http from '../../http-common';
 import { vueTopprogress } from 'vue-top-progress';
+import moment from 'moment';
 
 export default {
  name: "Map",
@@ -17,7 +63,13 @@ export default {
     },
  data() {
    return{
-     center: [51.505, -0.09]
+     center: [51.505, -0.09],
+        minPeople: 0,
+        maxPeople: 90,
+        minMask: 0,
+        maxMask: 100,
+        sliderPeople: 40,
+        sliderMask: 40,
    };
  },
  methods: {
@@ -48,7 +100,7 @@ export default {
     // countries: ["Canada", "US", "Mexico", "France", "China", "Japan", "Spain", 
     // "Germany", "Brazil", "Russia", "Australia", "India", "Sweden", "Argentina",
     // "United Kingdom", "Italy", "Greece", "Iran", "Romania", "Algeria", "Egypt", "New Zealand"],
-    date: "2021-02-10",
+     date: moment().substract(1, "days").format('YYYY-MM-DD'),
      subject: "confirmed",
    }).then((response) => {
      let countriesData = response.data.data;
@@ -78,10 +130,31 @@ export default {
  },
 };
 </script>
-<style>
+<style scoped>
 #mapContainer {
     float: right;
- width: 75vw;
+ width: 73vw;
  height: 100vh;
+ z-index: 1;
 }
+.enableBut {
+  position: absolute;
+  left: 500px;
+  top: 15px;
+  z-index: 100;
+  font-family: 'Font Awesome 5 Free',Avenir, sans-serif;
+  color: #fff;
+}
+
+#run {
+  position: relative;
+  left: 5px;
+}
+
+.modal-dialog {
+  font-family: 'Font Awesome 5 Free',Avenir, sans-serif;
+}
+.btn {
+    color: #fff;
+  }
 </style>

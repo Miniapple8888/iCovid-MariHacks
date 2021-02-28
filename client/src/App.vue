@@ -27,28 +27,39 @@ export default {
         {
           href: '/',
           title: 'Home',
+          icon: 'fa fa-home',
         },
         {
           href: '/live-simulation',
           title: 'Live Simulation',
+          icon: 'fa fa-gamepad',
           child: [
             {
               href: '/live-simulation/ar',
-              title: 'Augmented Reality'
+              title: 'Augmented Reality',
+              icon: 'fa fa-mobile'
             }
           ]
         },
         {
           href: '/charts',
           title: 'Charts',
+          icon: 'fa fa-chart-line',
         }, 
         {
           href: '/statistics',
           title: 'Statistics',
+          icon: 'fa fa-chart-bar',
+        },
+        {
+          href: '/self-test',
+          title: 'Self-test',
+          icon: 'fa fa-vial',
         },
         {
           href: '/about',
           title: 'About',
+          icon: 'fa fa-user',
         }, 
      ],
     menuCollapsed:true,
@@ -61,6 +72,10 @@ async created() {
 </script>
 
 <style>
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.1.1/css/all.min.css');
+body {
+  font-family: 'Font Awesome 5 Free',Avenir, sans-serif;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -68,5 +83,13 @@ async created() {
   text-align: center;
   color: #2c3e50;
   /*margin-top: 60px;*/
+}
+.v-sidebar-menu .vsm--arrow::after {
+  content: '\f105';
+  font-family: 'Font Awesome 5 Free';
+}
+.btn {
+  font-family: 'Font Awesome 5 Free',Avenir, sans-serif;
+  color: #fff;
 }
 </style>

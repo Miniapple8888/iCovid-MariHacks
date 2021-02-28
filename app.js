@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   console.log("I am executed!");
   //origin = 'http://localhost:8081';
 } else {
-  console.log("I am production!");
+  console.log(process.env.NODE_ENV);
 }
 
 const corsOptions = {

@@ -13,10 +13,10 @@
             <b-form-datepicker id="endDate" v-model="endDate" class="mb-2"></b-form-datepicker>
             <label for="startDate">Subject</label>
             <b-form-select v-model="selectedSubject" :options="subjectObptions"></b-form-select>
+            <b-button variant="primary" @click="updateChart" id="update">Update</b-button>
         </div>
         <div class="small">
             <line-chart :chart-data="datacollection"></line-chart>
-            <b-button variant="primary" @click="updateChart">Update</b-button>
         </div>
     </div>
 </template>
@@ -115,18 +115,21 @@ export default {
 </script>
 <style scoped>
 .small {
-    max-width: 450px;
+    max-width: 500px;
     margin:  50px auto;
   }
   .selectionOptions {
       float: right;
       margin-right: 50px;
+      margin-top: 50px;
       padding: 20px;
-      width: 200px;
+      width: 225px;
   }
   .message {
-      width: 50vw;
       margin-left: 350px;
       height: 20px;
+  }
+  #update {
+      margin-top: 15px;
   }
 </style>

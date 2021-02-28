@@ -1,17 +1,72 @@
 <html>
     <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
     <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/1.6.2/aframe/build/aframe-ar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+
+        const http = axios.create({
+            baseURL: window.location.hostname,
+            headers: {
+             'Content-type': 'application/json',
+            },
+        });
+
+        function getToday() {
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today = yyyy + '-' + mm + '-' + dd;
+            return String(today);
+        }
+
+        const MAP_WIDTH = 6;
+        const MAP_HEIGHT = 6;
+
+        function convertCoords(lat, lon) {
+            var y = ((-1 * lat) + 90) * (MAP_HEIGHT / 180);
+            var x = (lon + 180) * (MAP_WIDTH / 360);
+            x -= MAP_WIDTH/1.72;
+            y -= MAP_HEIGHT/2.15;
+        return {x:x,y:y};
+        }
+
+        function getStats() {
+            axios.post('/multi-stats', {
+                includeAll: true,
+                //countries: ["Canada"],
+                date: "2021-01-05",
+                subject: "confirmed",
+            }).then((response) => {
+                let countriesData = response.data.data;
+                for (let c = 0; c < countriesData.length; c++) {
+                    var strength = countriesData[c].data[0].value * 0.0001;
+                    var color = "green";
+                    if (strength >= 1) {
+                        color = "red" // red
+                    }
+                    if (strength < 1 && strength >= 0.4) {
+                        color = "orange" // orange
+                    }
+                    if (strength < 0.4) {
+                        color = "green" // green
+                    }
+                    console.log(countriesData[c].country);
+                    var coords = convertCoords(countriesData[c].data[0].lat, countriesData[c].data[0].long);
+                    $("#marker").append( "<a-box scale='0.05 " + String(strength) + " 0.05' position='" + String(coords.x) + " " + String(strength/2) + " " + String(coords.y) +"' material='color: " + color + ";'></a-box>" );
+                }
+            });
+        }
+
+        getStats();
+    </script>
     <body style="margin: 0px; overflow: hidden;">
             <a-scene embedded arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;">
-                <a-marker preset='hiro'> 
-                    <a-box position='0 0.5 0' material="color: red;">
-                        <a-animation attribute="rotation"
-                            dur="3000"
-                            to="360 360 0"
-                            repeat="indefinite"
-                            easing="linear">
-                        </a-animation>
-                    </a-box>
+                <a-marker id='marker' type="pattern" url="ar/pattern.patt"> 
+                   <a-image id='map' position='0 0.1 0' rotation='-90 0 0' scale='7 5 5'src="ar/world-map.png">
+                   </a-image>
                 </a-marker>
                 <a-entity camera></a-entity>
             </a-scene>

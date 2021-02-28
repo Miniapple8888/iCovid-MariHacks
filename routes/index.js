@@ -6,15 +6,9 @@ module.exports = (app) => {
         message: 'Welcome to the users API!',
     }));
 
-    app.get('/live-simulation-ar', (req, res) => {
-        res.sendFile(path.join(__dirname + '/../ar/index.html'));
-    });
-    app.get('/ar/flamingo_model', (req, res) => {
-        res.sendFile(path.join(__dirname + '/../ar/Flamingo.gltf'));
-    });
-    app.get('/ar/flamingo_img', (req, res) => {
-        res.sendFile(path.join(__dirname + '/../ar/flamingo.jpg'));
-    });
+    app.get('/live-simulation-ar', (req, res) => { res.sendFile(path.join(__dirname + '/../ar/index.html')); });
+    app.get('/ar/pattern.patt', (req, res) => { res.sendFile(path.join(__dirname + '/../ar/pattern-Untitled.patt')); });
+    app.get('/ar/world-map.png', (req, res) => { res.sendFile(path.join(__dirname + '/../ar/world-map.png')); });
     app.post('/simulate', simulation.createSimulation);
     app.post('/stats', simulation.getCovidStats);
     app.post('/multi-stats', simulation.getMultiCovidStats);

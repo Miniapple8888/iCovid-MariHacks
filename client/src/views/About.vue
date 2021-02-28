@@ -19,6 +19,7 @@ export default {
 </script>
 <style scoped>
 div {
+    margin-top: 10px;
     margin-left: 400px;
     padding-right: 20px;
     text-align: left;

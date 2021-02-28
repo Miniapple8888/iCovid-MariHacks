@@ -2,6 +2,7 @@
 import { Doughnut } from 'vue-chartjs';
 
 export default {
+    name: "Doughnut",
   extends: Doughnut,
   props: ['chartData','options'],
   mounted () {
