@@ -2,19 +2,20 @@ const rp = require('request-promise'); // Request GET data online
 const moment = require('moment'); // Time manipulation lib
 const fs = require('fs');
 
+async function getLocation(country) {
+    var rawdata = fs.readFileSync('countries_location.json');
+    var data = JSON.parse(rawdata);
+    var country = data[country] || false;
+    if (country) {
+        return { lat: country.latitude, long: country.longitude };
+    } else {
+        return null;
+    }
+}
+
 module.exports = {
     async createSimulation(req, res) {
         
-    },
-    async getLocation(country) {
-        var rawdata = fs.readFileSync('countries_location.json');
-        var data = JSON.parse(rawdata);
-        var country = data[country] || false;
-        if (country) {
-            return { lat: country.latitude, long: country.longitude };
-        } else {
-            return null;
-        }
     },
     async getMultiCovidStats(req, res) {
         const countries = req.body.countries || "Canada"; // Requested country
@@ -28,11 +29,15 @@ module.exports = {
                 var points = { country: countries[c], data: [] };
                 if (countryData.length > 0) {
                     for (var d = 0; d < countryData.length; d++) {
-                        if (countryData[d].date === date) {
-                            console.log("found")
+                        if (d == 0) {
+                            console.log(moment(countryData[d].date,'YYYY-MM-DD').format('YYYY-MM-DD'), date);
+                        }
+                        if (moment(countryData[d].date,'YYYY-MM-DD').format('YYYY-MM-DD') === date) {
+                            
                             var value = countryData[d][subject] - countryData[d-1][subject]; // Get relative value for 1 day
                             if (value < 0) value == 0; // If negative, then out of maximums of data set
-                            points.data.push({ date: countryData[d].date, value: value, location: this.getLocation(countries[c]) }); // Add valid data to array
+                            
+                            points.data.push({ date: countryData[d].date, value: value, location: getLocation(countries[c]) }); // Add valid data to array
                             break;
                         } else {
                             continue;
