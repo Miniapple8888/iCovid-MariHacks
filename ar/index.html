@@ -28,16 +28,29 @@
         function convertCoords(lat, lon) {
             var y = ((-1 * lat) + 90) * (MAP_HEIGHT / 180);
             var x = (lon + 180) * (MAP_WIDTH / 360);
-            x -= MAP_WIDTH/1.72;
-            y -= MAP_HEIGHT/2.15;
+            x -= MAP_WIDTH/2;
+            y -= MAP_HEIGHT/2;
+            if (x < 0) {
+                x /= 1;
+                y /= 1;
+                x += 0;
+                y += 0;
+            } else {
+                x /= 1;
+                y /= 1;
+                x += 0;
+                y += 0;
+            }
+            x -= 0.3;
+            y += 0.2;
         return {x:x,y:y};
         }
 
         function getStats() {
             axios.post('/multi-stats', {
                 includeAll: true,
-                //countries: ["Canada"],
-                date: "2021-01-05",
+                //countries: ["France"],
+                date: "2021-02-25",
                 subject: "confirmed",
             }).then((response) => {
                 let countriesData = response.data.data;

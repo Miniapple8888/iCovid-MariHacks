@@ -1,4 +1,4 @@
-const {simulation} = require("../middlewares");
+const {simulation, predict_cases, generate_simulation} = require("../middlewares");
 const path = require('path');
 
 module.exports = (app) => {
@@ -12,4 +12,6 @@ module.exports = (app) => {
     app.post('/simulate', simulation.createSimulation);
     app.post('/stats', simulation.getCovidStats);
     app.post('/multi-stats', simulation.getMultiCovidStats);
+    app.post('/predict', predict_cases.predict);
+    app.post('/generate-simulation', generate_simulation.generateSimulation);
 }
